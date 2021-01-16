@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/edt_perusahaan"
+        android:orderInCategory="1001"
+        android:title="Edit Perusahaan"/>
+
+    <item android:id="@+id/gnti_perusahaan"
+        android:orderInCategory="1001"
+        android:title="Ganti Perushaan"/>
+</menu>

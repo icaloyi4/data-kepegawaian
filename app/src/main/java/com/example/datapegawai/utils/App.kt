@@ -8,6 +8,16 @@ import org.koin.core.logger.Level
 
 class App : Application() {
 
+    companion object {
+        lateinit var preff : SharedData
+        var idPerusahaan = ""
+        var keyIdPerusahaan = "idPerusahaan"
+
+        var namaPerusahaan = ""
+        var keyNamaPerusahaan = "namaPerusahaan"
+    }
+
+
     override fun onCreate() {
         super.onCreate()
         startKoin {
@@ -15,5 +25,9 @@ class App : Application() {
             androidContext(this@App)
             modules(listOf(repositoryModule, viewModelModule, databaseModule))
         }
+
+        preff = SharedData(applicationContext)
+        if (preff.getData(keyIdPerusahaan).toString().isNotEmpty()) idPerusahaan = preff.getData(keyIdPerusahaan).toString()
+        if (preff.getData(keyNamaPerusahaan).toString().isNotEmpty()) namaPerusahaan = preff.getData(keyNamaPerusahaan).toString()
     }
 }

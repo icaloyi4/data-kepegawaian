@@ -7,9 +7,11 @@ import com.example.datapegawai.database.DataPegawaiDao
 import com.example.datapegawai.mvvm.model.LandingFormPerusahaanRepository
 import com.example.datapegawai.mvvm.model.LandingPerusahaanRepository
 import com.example.datapegawai.mvvm.model.LandingRepository
+import com.example.datapegawai.mvvm.model.MainRepository
 import com.example.datapegawai.mvvm.viewmodel.LandingFormPerusahaanViewModel
 import com.example.datapegawai.mvvm.viewmodel.LandingPerusahaanViewModel
 import com.example.datapegawai.mvvm.viewmodel.LandingViewModel
+import com.example.datapegawai.mvvm.viewmodel.MainViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -26,6 +28,10 @@ val viewModelModule = module {
 
     viewModel {
         LandingPerusahaanViewModel(get())
+    }
+
+    viewModel {
+        MainViewModel(get())
     }
 }
 
@@ -49,6 +55,13 @@ val repositoryModule = module {
     }
     single {
         provideLandingPerusahaanRepository(get())
+    }
+
+    fun provideMainRepository(dao: DataPegawaiDao): MainRepository {
+        return MainRepository(dao)
+    }
+    single {
+        provideMainRepository(get())
     }
 }
 

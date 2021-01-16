@@ -1,14 +1,33 @@
 package com.example.datapegawai.utils
 
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.content.Context
 import android.view.inputmethod.InputMethodManager
 import com.example.datapegawai.R
 import org.aviran.cookiebar2.CookieBar
+import java.text.SimpleDateFormat
+import java.util.*
 
 class Utils {
     companion object {
-        fun errorToast(ctx: Context, msg: String, dur : Long = 2000) {
+        var formatDateServerDateOnly = "yyyy-MM-dd"
+        var formatDateCust = "dd MMMM yyyy"
+        fun changeDateFormat(oldDateString: String):String{
+            try {
+                var newDateString= ""
+
+                val sdf = SimpleDateFormat(formatDateServerDateOnly)
+                val d = sdf.parse(oldDateString)
+                sdf.applyPattern(formatDateCust)
+                newDateString = sdf.format(d)
+                return newDateString
+            } catch (e: Exception) {
+                return oldDateString
+            }
+        }
+
+        fun errorToast(ctx: Context, msg: String, dur: Long = 2000) {
 
 //            Utils.errorToast(ctx, msg)
 
@@ -21,7 +40,7 @@ class Utils {
                 .show()
         }
 
-        fun warningToast(ctx: Context, msg: String, dur : Long = 2000) {
+        fun warningToast(ctx: Context, msg: String, dur: Long = 2000) {
 
 //            Utils.warningToast(ctx, msg)
             CookieBar.build(ctx as Activity)
@@ -34,7 +53,7 @@ class Utils {
         }
 
 
-        fun okToast(ctx: Context, msg: String, dur : Long = 2000){
+        fun okToast(ctx: Context, msg: String, dur: Long = 2000){
 
             CookieBar.build(ctx as Activity)
                 .setTitle("Sukses").setTitleColor(android.R.color.white)
@@ -46,7 +65,7 @@ class Utils {
         }
 
 
-        fun infoToast(ctx: Context, msg: String, dur : Long = 2000){
+        fun infoToast(ctx: Context, msg: String, dur: Long = 2000){
 
             CookieBar.build(ctx as Activity)
                 .setTitle("InformaSI").setTitleColor(android.R.color.white)
@@ -67,5 +86,27 @@ class Utils {
             } catch (e: Exception) {
             }
         }
+
+        fun datePickerUtils(context: Context?, getInter: InterfaceUmum.getDatePicker) {
+            val datePicker: DatePickerDialog
+            val c = Calendar.getInstance()
+            val mYear = c[Calendar.YEAR] // current year
+            val mMonth = c[Calendar.MONTH] // current month
+            val mDay = c[Calendar.DAY_OF_MONTH] // current day
+            datePicker = DatePickerDialog(
+                context!!,
+                { view, year, monthOfYear, dayOfMonth ->
+                    val calendar = Calendar.getInstance()
+                    calendar[year, monthOfYear] = dayOfMonth
+                    val format =
+                        SimpleDateFormat(formatDateServerDateOnly)
+                    val dateString = format.format(calendar.time)
+                    getInter.getTanggal(dateString)
+                }, mYear, mMonth, mDay
+            )
+            datePicker.show()
+        }
     }
+
+
 }

@@ -13,6 +13,7 @@ import com.example.datapegawai.R
 import com.example.datapegawai.database.entity.PerusahaanEntity
 import com.example.datapegawai.mvvm.view.MainActivity
 import com.example.datapegawai.mvvm.viewmodel.LandingPerusahaanViewModel
+import com.example.datapegawai.utils.App
 import kotlinx.android.synthetic.main.fragment_perusahaan.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -53,6 +54,8 @@ class LandingPerusahaanFragment() : Fragment() {
         }
 
         v.btn_pilih.setOnClickListener {
+            App.preff.setDataString(App.keyIdPerusahaan, listPerusahaan[v.spin_perusahaan.selectedItemPosition].id.toString())
+            App.preff.setDataString(App.keyNamaPerusahaan, listPerusahaan[v.spin_perusahaan.selectedItemPosition].namaPerusahaan)
             val intent = Intent(ctx, MainActivity::class.java)
             activity?.startActivity(intent)
             activity?.finish()
