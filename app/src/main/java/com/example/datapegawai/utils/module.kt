@@ -4,7 +4,11 @@ import android.app.Application
 import androidx.room.Room
 import com.example.datapegawai.database.AppDatabase
 import com.example.datapegawai.database.DataPegawaiDao
+import com.example.datapegawai.mvvm.model.LandingFormPerusahaanRepository
+import com.example.datapegawai.mvvm.model.LandingPerusahaanRepository
 import com.example.datapegawai.mvvm.model.LandingRepository
+import com.example.datapegawai.mvvm.viewmodel.LandingFormPerusahaanViewModel
+import com.example.datapegawai.mvvm.viewmodel.LandingPerusahaanViewModel
 import com.example.datapegawai.mvvm.viewmodel.LandingViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -15,14 +19,36 @@ val viewModelModule = module {
     viewModel {
         LandingViewModel(get())
     }
+
+    viewModel {
+        LandingFormPerusahaanViewModel(get())
+    }
+
+    viewModel {
+        LandingPerusahaanViewModel(get())
+    }
 }
 
 val repositoryModule = module {
+    fun provideLandingFormPerusahaanRepository(dao: DataPegawaiDao): LandingFormPerusahaanRepository {
+        return LandingFormPerusahaanRepository(dao)
+    }
+    single {
+        provideLandingFormPerusahaanRepository(get())
+    }
+
     fun provideLandingRepository(dao: DataPegawaiDao): LandingRepository {
         return LandingRepository(dao)
     }
     single {
         provideLandingRepository(get())
+    }
+
+    fun provideLandingPerusahaanRepository(dao: DataPegawaiDao): LandingPerusahaanRepository {
+        return LandingPerusahaanRepository(dao)
+    }
+    single {
+        provideLandingPerusahaanRepository(get())
     }
 }
 
