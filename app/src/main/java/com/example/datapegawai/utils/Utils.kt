@@ -102,7 +102,7 @@ class Utils {
                     val calendar = Calendar.getInstance()
                     calendar[year, monthOfYear] = dayOfMonth
                     val format =
-                        SimpleDateFormat(formatDateServerDateOnly)
+                        SimpleDateFormat(formatDateCust)
                     val dateString = format.format(calendar.time)
                     getInter.getTanggal(dateString)
                 }, mYear, mMonth, mDay

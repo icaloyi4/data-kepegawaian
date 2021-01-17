@@ -67,14 +67,13 @@ class FormPerusahaanActivity : AppCompatActivity(),JabatanAdapter.onItemClick {
         btn_tambah.setOnClickListener(object : View.OnClickListener{
             override fun onClick(p0: View?) {
                 Utils.hideSoftKeyboard(this@FormPerusahaanActivity)
-                listJabatan.add(JabatanEntity(edt_jabatan.text.toString()))
+                vm.insertJabatan(JabatanEntity(edt_jabatan.text.toString(), idPerusahaan = perusahaan?.id))
                 edt_jabatan.setText("")
                 if (listJabatan.size==0){
                     txt_ket_jabata.visibility = View.VISIBLE
                 } else {
                     txt_ket_jabata.visibility = View.GONE
                 }
-                adapter?.notifyDataSetChanged()
             }
 
         })
@@ -83,18 +82,10 @@ class FormPerusahaanActivity : AppCompatActivity(),JabatanAdapter.onItemClick {
             override fun onClick(p0: View?) {
                 if (listJabatan.size>0&&edt_perusahaan.text.isNotEmpty()){
                     perusahaan?.namaPerusahaan = edt_perusahaan.text.toString()
-                    val id = perusahaan?.let { vm.insertPerusahaan(it) }
-                    id?.observe(this@FormPerusahaanActivity, {
-                        App.preff.setDataString(App.keyIdPerusahaan, perusahaan?.id.toString())
-                        App.preff.setDataString(App.keyNamaPerusahaan, perusahaan?.namaPerusahaan)
-                        for (i in 0 until listJabatan.size){
-                            listJabatan[i].idPerusahaan = it.toInt()
-                        }
-                        vm.insertJabatan(ctx, listJabatan)
-                    })
-
+                    if (perusahaan!=null){
+                        vm.insertPerusahaan(ctx, perusahaan!!)
+                    }
                 } else {
-
                     var msg = ""
                     if (edt_perusahaan.text.isEmpty()){
                         msg += "Nama Perusahaan Tidak Boleh Kosong \n"

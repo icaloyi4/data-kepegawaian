@@ -32,8 +32,8 @@ class MainViewModel(val repo: MainRepository) : ViewModel() {
 
     init {
 
-        getDataPegawaiRaw(idPerusahaan, kolom)
-        getJabatann(idPerusahaan)
+        /*getDataPegawaiRaw(idPerusahaan, kolom)
+        getJabatann(idPerusahaan)*/
     }
 
     fun getDataPegawaiRaw(idPerusahaan: Int, kolom: String){

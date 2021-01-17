@@ -49,18 +49,20 @@ class FormPerusahaanViewModel(val repo: FormPerusahaanRepository) : ViewModel() 
         }
     }
 
-    fun insertPerusahaan(perusahaanEntity: PerusahaanEntity): MutableLiveData<Long> {
-        val liveData = MutableLiveData<Long>()
+    fun insertPerusahaan(ctx : Context, perusahaanEntity: PerusahaanEntity) {
+
         viewModelScope.launch {
-            liveData.value = repo.insertPerusahaan(perusahaanEntity)
+            repo.insertPerusahaan(perusahaanEntity)
+            App.preff.setDataString(App.keyIdPerusahaan, perusahaanEntity?.id.toString())
+            App.preff.setDataString(App.keyNamaPerusahaan, perusahaanEntity?.namaPerusahaan)
+            (ctx as Activity).finish()
         }
-        return liveData
     }
 
-    fun insertJabatan(ctx : Context, jabatanEntity: List<JabatanEntity>) {
+    fun insertJabatan(jabatanEntity: JabatanEntity) {
         viewModelScope.launch {
             repo.insertJabatan(jabatanEntity)
-            (ctx as Activity).finish()
+            getJabatann(idPerusahaan)
         }
     }
 
@@ -70,11 +72,12 @@ class FormPerusahaanViewModel(val repo: FormPerusahaanRepository) : ViewModel() 
                 var jmlPegawai = repo.getCountPegawaiJabatan(idPerusahaan, idJabatanEntity)
                 if (jmlPegawai==0){
                     repo.deleteJabatan(idPerusahaan, idJabatanEntity)
+                    getJabatann(idPerusahaan)
                 } else {
                     _loadingState.postValue(LoadingState.error("Tidak dapat dihapus karena ada $jmlPegawai pegawai di jabatan ini!"))
                 }
             } catch (e: Exception) {
-
+                _loadingState.postValue(LoadingState.error(e.message))
             }
         }
     }

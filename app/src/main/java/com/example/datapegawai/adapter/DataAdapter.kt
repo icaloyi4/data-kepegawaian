@@ -50,9 +50,9 @@ class DataAdapter(
 
         holder.view.txt_nama.text = itemListModel.nama
         holder.view.txt_jabatan.text = itemListModel.jabatan
-        holder.view.txt_ttl.text = "${itemListModel.tempatLahir}, ${Utils.changeDateFormat(
+        holder.view.txt_ttl.text = "${itemListModel.tempatLahir}, ${
             itemListModel.tanggalLahir
-        )}"
+        }"
         holder.view.txt_alamat.text = itemListModel.alamat
 
         holder.view.btn_edit.setOnClickListener(object : View.OnClickListener {

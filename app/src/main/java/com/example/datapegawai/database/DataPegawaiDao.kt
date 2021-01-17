@@ -38,6 +38,9 @@ interface DataPegawaiDao {
     fun insertJabatan(jabatanEntity: List<JabatanEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertJabatanSingle(jabatanEntity: JabatanEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertPegawai(pegawaiEntity: PegawaiEntity)
 
     @Query("delete from pegawai where idPerusahaan = :idPerusahaan and id = :idPegawai")

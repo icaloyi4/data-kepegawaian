@@ -78,6 +78,8 @@ class MainActivity : AppCompatActivity(), DataAdapter.onItemClick, DataAdapter.o
     override fun onResume() {
         super.onResume()
         txt_nama_perusahaan.text = App.preff.getData(App.keyNamaPerusahaan)
+        vm.getDataPegawaiRaw(vm.idPerusahaan, vm.kolom)
+        vm.getJabatann(vm.idPerusahaan)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

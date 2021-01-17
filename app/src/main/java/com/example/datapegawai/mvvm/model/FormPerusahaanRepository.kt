@@ -20,7 +20,7 @@ import kotlinx.coroutines.withContext
 
 class FormPerusahaanRepository(private val dataPegawaiDao: DataPegawaiDao) {
     suspend fun insertPerusahaan(perusahaanEntity: PerusahaanEntity) = withContext(Dispatchers.IO) { dataPegawaiDao.insertPerusahaan(perusahaanEntity)}
-    suspend fun insertJabatan(jabatanEntity: List<JabatanEntity>) = withContext(Dispatchers.IO) { dataPegawaiDao.insertJabatan(jabatanEntity)}
+    suspend fun insertJabatan(jabatanEntity: JabatanEntity) = withContext(Dispatchers.IO) { dataPegawaiDao.insertJabatanSingle(jabatanEntity)}
     suspend fun deleteJabatan(idPerusahaan: Int, idJabatanEntity: Int) = withContext(Dispatchers.IO) { dataPegawaiDao.deleteJabatan(idPerusahaan, idJabatanEntity)}
     suspend fun getDataPerusahaan(id : Int) = dataPegawaiDao.getPerusahaanBaseId(id)
     suspend fun getJabatan(idPerusahaan: Int) = dataPegawaiDao.getJabatan(idPerusahaan)
