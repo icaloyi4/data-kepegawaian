@@ -1,5 +1,5 @@
 # data-kepegawaian
-APlikasi isi data pegawai offline berbasis mobile
+Aplikasi isi data pegawai offline berbasis mobile
 
 Menggunakan design patter MMVM, Dependecy KOIN dan Room database
 
