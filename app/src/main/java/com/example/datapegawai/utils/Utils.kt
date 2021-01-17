@@ -14,7 +14,7 @@ import java.util.*
 
 class Utils {
     companion object {
-        var formatDateServerDateOnly = "yyyy-MM-dd"
+        var formatDateServerDateOnly = "dd-MM-yyyy"
         var formatDateCust = "dd MMMM yyyy"
         fun changeDateFormat(oldDateString: String):String{
             try {

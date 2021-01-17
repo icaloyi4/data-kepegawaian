@@ -28,7 +28,6 @@ class LandingPerusahaanViewModel(val repo: LandingPerusahaanRepository) : ViewMo
             _perusahaanData.postValue(repo.getDataPerusahaan())
             _loadingState.postValue(LoadingState.LOADED)
         }
-
     }
 
 }

@@ -50,12 +50,6 @@ class MainActivity : AppCompatActivity(), DataAdapter.onItemClick, DataAdapter.o
         setSupportActionBar(toolbar)
         toolbar.title = ""
 
-//        ((MainActivity)getActivity()).getSupportActionBar().setTitle("Inbound");
-        //        ((MainActivity)getActivity()).getSupportActionBar().setTitle("Inbound");
-//        toolbar.option
-
-        txt_nama_perusahaan.text = App.preff.getData(App.keyNamaPerusahaan)
-
         //init Recycle
         val numberOfColumns = 2
         val layoutManager = GridLayoutManager(ctx, numberOfColumns)
@@ -79,6 +73,11 @@ class MainActivity : AppCompatActivity(), DataAdapter.onItemClick, DataAdapter.o
             dialogTambahAlamat()
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        txt_nama_perusahaan.text = App.preff.getData(App.keyNamaPerusahaan)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -127,12 +126,12 @@ class MainActivity : AppCompatActivity(), DataAdapter.onItemClick, DataAdapter.o
         popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.edt_perusahaan -> {
-                    /*(context as Activity).startActivity(
+                    startActivity(
                         Intent(
-                            context,
-                            SearchWarehouseActivity::class.java
+                            ctx,
+                            FormPerusahaanActivity::class.java
                         )
-                    )*/
+                    )
                     return@OnMenuItemClickListener true
                 }
                 R.id.gnti_perusahaan -> {

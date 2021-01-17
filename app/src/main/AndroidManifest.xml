@@ -17,7 +17,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".mvvm.view.FormActivity" />
+        <activity android:name=".mvvm.view.FormPerusahaanActivity" />
         <activity android:name=".mvvm.view.landing.LandingActivity">
         </activity>
         <activity android:name=".mvvm.view.MainActivity"></activity>
