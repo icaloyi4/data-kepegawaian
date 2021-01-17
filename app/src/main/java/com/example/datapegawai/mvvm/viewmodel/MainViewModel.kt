@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.sqlite.db.SimpleSQLiteQuery
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.example.datapegawai.database.LoadingState
 import com.example.datapegawai.database.entity.JabatanEntity
 import com.example.datapegawai.database.entity.PegawaiEntity
@@ -12,8 +14,10 @@ import com.example.datapegawai.mvvm.model.MainRepository
 import com.example.datapegawai.utils.App
 import kotlinx.coroutines.launch
 
+
 class MainViewModel(val repo: MainRepository) : ViewModel() {
     val idPerusahaan = App.preff.getData(App.keyIdPerusahaan).toString().toInt()
+    val kolom = "p.idJabatan"
     private val _loadingState = MutableLiveData<LoadingState>()
     val loadingState: LiveData<LoadingState>
         get() = _loadingState
@@ -27,19 +31,22 @@ class MainViewModel(val repo: MainRepository) : ViewModel() {
         get() = _jabatanData
 
     init {
-        getDataPegawai(idPerusahaan, "p.nama")
+
+        getDataPegawaiRaw(idPerusahaan, kolom)
         getJabatann(idPerusahaan)
     }
 
-    fun getDataPegawai(idPerusahaan : Int, kolom : String){
+    fun getDataPegawaiRaw(idPerusahaan: Int, kolom: String){
         viewModelScope.launch {
             _loadingState.postValue(LoadingState.LOADING)
-            _pegawaiData.postValue(repo.getDataPegawai(idPerusahaan, kolom))
+            var queryRawPegawai = "Select p.*, j.namaJabatan as jabatan from pegawai p join jabatan j on p.idJabatan=j.id  where p.idPerusahaan=$idPerusahaan order by $kolom asc"
+
+            _pegawaiData.postValue(repo.getDataPegawaiRaw(SimpleSQLiteQuery(queryRawPegawai)))
             _loadingState.postValue(LoadingState.LOADED)
         }
     }
 
-    fun getJabatann(idPerusahaan : Int){
+    fun getJabatann(idPerusahaan: Int){
         viewModelScope.launch {
             _loadingState.postValue(LoadingState.LOADING)
             _jabatanData.postValue(repo.getJabatan(idPerusahaan))
@@ -50,7 +57,14 @@ class MainViewModel(val repo: MainRepository) : ViewModel() {
     fun insertPegawai(pegawaiEntity: PegawaiEntity){
         viewModelScope.launch {
             repo.insertPegawai(pegawaiEntity)
-            getDataPegawai(idPerusahaan, "p.nama")
+            getDataPegawaiRaw(idPerusahaan, kolom)
+        }
+    }
+
+    fun deletePegawai(idPegawai: Int){
+        viewModelScope.launch {
+            repo.deletePegawai(idPerusahaan, idPegawai)
+            getDataPegawaiRaw(idPerusahaan, kolom)
         }
     }
 

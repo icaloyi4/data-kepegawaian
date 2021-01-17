@@ -3,7 +3,10 @@ package com.example.datapegawai.utils
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AlertDialog
 import com.example.datapegawai.R
 import org.aviran.cookiebar2.CookieBar
 import java.text.SimpleDateFormat
@@ -68,7 +71,7 @@ class Utils {
         fun infoToast(ctx: Context, msg: String, dur: Long = 2000){
 
             CookieBar.build(ctx as Activity)
-                .setTitle("InformaSI").setTitleColor(android.R.color.white)
+                .setTitle("Informasi").setTitleColor(android.R.color.white)
                 .setMessage(msg).setMessageColor(android.R.color.white)
                 .setDuration(dur) // 5 seconds
                 .setBackgroundColor(R.color.blue_info)
@@ -106,7 +109,33 @@ class Utils {
             )
             datePicker.show()
         }
+
+        fun dialogkonfirmasi(ctx : Context, inter : InterfaceUmum.konfirmasi, msg : String){
+            val builder: AlertDialog.Builder = AlertDialog.Builder(ctx)
+
+            builder.setTitle("Konfirmasi")
+            builder.setMessage(msg)
+            builder.setCancelable(true)
+
+            builder.setPositiveButton(
+                "Ya"
+            ) { p0, p1 ->
+                if (p0 != null) {
+                    inter.yes()
+                    p0.dismiss()
+
+                }
+            }
+            builder.setNegativeButton(
+                "Tidak"
+            ) { p0, p1 -> p0?.dismiss() }
+
+            val alertDialog: AlertDialog = builder.create()
+            alertDialog.show()
+        }
     }
+
+
 
 
 }

@@ -7,5 +7,5 @@
 
     <item android:id="@+id/gnti_perusahaan"
         android:orderInCategory="1001"
-        android:title="Ganti Perushaan"/>
+        android:title="Ganti Perusahaan"/>
 </menu>

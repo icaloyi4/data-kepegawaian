@@ -31,7 +31,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_tambah_pegawai.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivity : AppCompatActivity(), DataAdapter.onItemClick {
+class MainActivity : AppCompatActivity(), DataAdapter.onItemClick, DataAdapter.onItemDelete {
 
     private val vm by viewModel<MainViewModel>()
     var listPegawai : ArrayList<PegawaiModel> = arrayListOf()
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity(), DataAdapter.onItemClick {
         val layoutManager = GridLayoutManager(ctx, numberOfColumns)
         lv_data.layoutManager = layoutManager
 
-        adapter = DataAdapter(ctx, listPegawai, this)
+        adapter = DataAdapter(ctx, listPegawai, this, this)
         lv_data.adapter = adapter
 
         vm.perusahaanData.observe(this, Observer {
@@ -92,12 +92,12 @@ class MainActivity : AppCompatActivity(), DataAdapter.onItemClick {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                /*if (mAdapter != null) mAdapter.getFilter().filter(query)*/
+                if (adapter != null) adapter.getFilter()?.filter(query)
                 return false
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                /*if (mAdapter != null) mAdapter.getFilter().filter(newText)*/
+                if (adapter != null) adapter.getFilter()?.filter(newText)
                 return false
             }
         })
@@ -143,10 +143,6 @@ class MainActivity : AppCompatActivity(), DataAdapter.onItemClick {
                         )
                     )
                     finish()
-                    /*val url = "http://wms.sewagudang.id/utility/Mobile/dokumentasi"
-                    val i = Intent(Intent.ACTION_VIEW)
-                    i.data = Uri.parse(url)
-                    (context as Activity).startActivity(i)*/
                     return@OnMenuItemClickListener true
                 }
             }
@@ -217,7 +213,16 @@ class MainActivity : AppCompatActivity(), DataAdapter.onItemClick {
 
         if (isupdate){
             builder.setTitle("Update Data Pegawai")
-
+            view.txt_nama.setText(item?.nama)
+            view.txt_alamat.setText(item?.alamat)
+            view.txt_ttl.setText(item?.tempatLahir)
+            view.txt_ttl2.setText(item?.tanggalLahir)
+            for(i in 0 until listJabatan.size){
+                if (listJabatan[i].id==item?.id){
+                    view.spin_jabatan.setSelection(i-1)
+                    break
+                }
+            }
         }
 
         val alertDialog: AlertDialog = builder.create()
@@ -225,6 +230,16 @@ class MainActivity : AppCompatActivity(), DataAdapter.onItemClick {
     }
 
     override fun itemClick(item: PegawaiModel, pos: Int) {
+        dialogTambahAlamat(item, true)
+    }
 
+    override fun itemDelete(item: PegawaiModel, pos: Int) {
+        var inter : InterfaceUmum.konfirmasi = object : InterfaceUmum.konfirmasi{
+            override fun yes() {
+                vm.deletePegawai(item.id)
+            }
+
+        }
+        Utils.dialogkonfirmasi(ctx, inter, "Apakah anda yakin ingin menghapus data pegawai atas nama ${item.nama} ?")
     }
 }

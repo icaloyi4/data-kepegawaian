@@ -46,7 +46,10 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_list_order"
                         android:gravity="center_vertical"
-                        android:text="TextView" />
+                        android:text="TextView"
+                        android:ellipsize="end"
+                        android:minLines="2"
+                        android:maxLines="2"/>
 
                     <TextView
                         android:id="@+id/txt_ttl"
@@ -54,7 +57,10 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_date"
                         android:gravity="center_vertical"
-                        android:text="TextView" />
+                        android:text="TextView"
+                        android:minLines="2"
+                        android:maxLines="2"
+                         />
 
                     <TextView
                         android:id="@+id/txt_jabatan"
@@ -62,7 +68,10 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_business_center"
                         android:gravity="center_vertical"
-                        android:text="TextView" />
+                        android:text="TextView"
+                        android:ellipsize="end"
+                        android:minLines="2"
+                        android:maxLines="2"/>
 
                     <TextView
                         android:id="@+id/txt_alamat"
@@ -70,7 +79,10 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_home"
                         android:gravity="center_vertical"
-                        android:text="TextView" />
+                        android:text="TextView"
+                        android:ellipsize="end"
+                        android:minLines="2"
+                        android:maxLines="2"/>
 
                 </LinearLayout>
             </LinearLayout>
@@ -78,20 +90,22 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="right"
+                android:gravity="center"
                 android:orientation="horizontal"
                 android:padding="10dp">
 
                 <ImageView
-                    android:id="@+id/imageView8"
+                    android:id="@+id/btn_edit"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
+                    android:layout_margin="10dp"
                     app:srcCompat="@android:drawable/ic_menu_edit" />
 
                 <ImageView
-                    android:id="@+id/imageView7"
+                    android:id="@+id/btn_delete"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
+                    android:layout_margin="10dp"
                     android:tint="@android:color/holo_red_light"
                     app:srcCompat="@android:drawable/ic_menu_delete" />
             </LinearLayout>
